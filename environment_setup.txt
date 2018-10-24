@@ -1,0 +1,15 @@
+conda create --name fastai python=3.6 ipykernel
+conda activate fastai
+nvcc --version
+conda install -c pytorch pytorch-nightly cuda92
+conda install -c fastai torchvision-nightly
+conda install -c fastai fastai
+
+python -c "import torchvision; print(torchvision.__version__)"
+0.2.1
+python -c "import torch; print(torch.__version__)"
+1.0.0.dev20181022
+python --version
+Python 3.6.6 :: Anaconda, Inc.
+python -c "import fastai; print(fastai.__version__)"
+1.0.13
