@@ -9,6 +9,8 @@ sidebar: home_sidebar
 
 This guide explains how to set up Google Cloud Platform (GCP) to use PyTorch 1.0.0 and fastai 1.0.2. At the end of this tutorial you will be able to use both in a GPU-enabled Jupyter Notebook environment.
 
+If you are returning to work and have previously completed the steps below, please go to the [returning to work](http://course-v3.fast.ai/update_gcp.html) section.
+
 ## Pricing
 
 GCP charges separately for the base CPU platform, and the GPU. We have two recommended configurations, *standard*, and *budget*. Note that all prices assume you are using *preemptible instances* (see below for details).
@@ -46,7 +48,7 @@ The project on which you are going to run the image needs to be linked with your
 
 ## Step 2: Install Google CLI
 
-To create then be able to connect to your instance, you'll need to install Google Cloud's command line interface (CLI) software from Google. For Windows user, we recommend that you use the [Ubuntu terminal](/terminal_tutorial.html) and follow the same instructions as Ubuntu users (remember you paste with shift + right click in the terminal). 
+To create then be able to connect to your instance, you'll need to install Google Cloud's command line interface (CLI) software from Google. For Windows user, we recommend that you use the [Ubuntu terminal](/terminal_tutorial.html) and follow the same instructions as Ubuntu users (see the link to learn how to paste into your terminal). 
 
 To install on Linux or Windows (in Ubuntu terminal), follow those four steps:
 ``` bash
@@ -120,10 +122,10 @@ gcloud compute instances create $INSTANCE_NAME \
         --image-family=$IMAGE_FAMILY \
         --image-project=deeplearning-platform-release \
         --maintenance-policy=TERMINATE \
-		--accelerator='type=nvidia-tesla-p4,count=1' \
+        --accelerator="type=nvidia-tesla-p4,count=1" \
         --machine-type=$INSTANCE_TYPE \
         --boot-disk-size=200GB \
-        --metadata='install-nvidia-driver=True' \
+        --metadata="install-nvidia-driver=True" \
         --preemptible
 ```
 
@@ -157,23 +159,29 @@ If your instance is stopped, your saved data will be kept safe but if you are ru
 
 These characteristics make preemptible instances a nice option for beginners, since you will not be running very deep models that take days to run. If however, you do need to run models without interruption for long periods of time, you can always call the same command but skip the '--preemptible' parameter. Take into account this will increase your costs to about $0.68 an hour.
 
-## Step 4: Configure Github and access fast.ai materials
+## Step 4: Access fast.ai materials and update packages
 
 Now your command line which should show a prompt along the lines of `jupyter@my-fastai-instance:`
 
 You should make sure Github is configured and pull from the repository. You can do this by typing the following lines:
 
-`cd tutorials/fastai`
+``` basg
+cd tutorials/fastai
+git checkout .
+git pull
+```
 
-`git checkout .`
+You should also update the fastai library:
 
-`git pull`
+``` bash
+sudo /opt/anaconda3/bin/conda update fastai
+```
 
 Next from your [jupyter notebook](http://localhost:8080/tree), click on 'tutorials', 'fastai' and you should look at something like this
 
 <img alt="nb tuto" src="/images/jupyter.png" class="screenshot">
 
-Go back to the [first page](index.html) to see how to use this jupyter notebook and run the jupyter notebook tutorial. Come back here once you're finished and *don't forget to stop your instance* with the next step.
+Now go back to the [first page](index.html) to see how to use this jupyter notebook and run the jupyter notebook tutorial. Come back here once you're finished and *don't forget to stop your instance* with the next step.
 
 ## Step 5: Stop an instance
 
@@ -191,8 +199,7 @@ To see how to open it again, update the course or the fastai library, go to the 
 + [Using the Google Cloud SDK installer](https://cloud.google.com/sdk/docs/downloads-interactive)
 + [Installing the latest Cloud SDK version](https://cloud.google.com/sdk/docs/#install_the_latest_cloud_tools_version_cloudsdk_current_version)
 + [Installing Google Cloud SDK (StackOverflow question)](https://stackoverflow.com/questions/46822766/sudo-apt-get-update-sudo-apt-get-install-google-cloud-sdk-cannot-be-done)
-+ [sudo apt-get update && sudo apt-get install google-cloud-sdk cannot be done (StackOverflow answer)
 
+---
 
-=======
 *Many thanks to Marcel Ackermann, Antonio Rueda Toicen, Viacheslav Kovalevskyi, Francisco Ingham, and Jeff Hale for their contributions to this guide.*
